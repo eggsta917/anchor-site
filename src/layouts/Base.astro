@@ -1,0 +1,72 @@
+---
+import '../styles/global.css';
+import Logo from '../components/Logo.astro';
+import { useT, type Lang } from '../i18n';
+
+interface Props { title: string; description?: string; lang?: Lang; showBanner?: boolean }
+const { title, description = 'New workforce apartments in Honolulu, built and managed by Oceans Real Estate.', lang = 'en', showBanner = true } = Astro.props;
+const s = useT(lang);
+const root = lang === 'ja' ? '/ja' : '';
+const resident = import.meta.env.PUBLIC_RESIDENT_PORTAL_URL ?? '#';
+const apply = import.meta.env.PUBLIC_APPLY_URL ?? '#';
+---
+<!doctype html>
+<html lang={lang}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title} · Anchor Rentals</title>
+  <meta name="description" content={description} />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="alternate" hreflang="en" href="https://anchorrentalshawaii.com/" />
+  <link rel="alternate" hreflang="ja" href="https://anchorrentalshawaii.com/ja/" />
+  <meta property="og:title" content={`${title} · Anchor Rentals`} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+</head>
+<body>
+  {showBanner && (
+    <div style="background: var(--teal); color: var(--cream); font-size: 13px; font-weight: 500; text-align: center; padding: 9px 16px;">
+      {s.banner} <a href={`${root}/#waitlist`} style="color: var(--cream); font-weight: 600;">{s.bannerCta}</a>
+    </div>
+  )}
+  <header class="wrap" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding-block: 18px;">
+    <a href={`${root}/`} style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--teal-dark);">
+      <Logo />
+      <span style="font-family: var(--font-head); font-weight: 700; font-size: 22px; letter-spacing: -0.02em;">Anchor Rentals</span>
+    </a>
+    <nav style="display: flex; flex-wrap: wrap; gap: 20px; font-size: 15px; font-weight: 500;">
+      <a href={`${root}/units/`} style="text-decoration: none;">{s.nav.units}</a>
+      <a href={`${root}/buildings/`} style="text-decoration: none;">{s.nav.buildings}</a>
+      <a href={`${root}/eligibility/`} style="text-decoration: none;">{s.nav.eligibility}</a>
+      <a href={`${root}/about/`} style="text-decoration: none;">{s.nav.about}</a>
+    </nav>
+    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+      <a href={resident} class="btn btn-outline btn-sm" rel="noopener">{s.nav.resident}</a>
+      <a href={apply} class="btn btn-primary btn-sm" rel="noopener">{s.nav.apply}</a>
+    </div>
+  </header>
+
+  <main><slot /></main>
+
+  <footer id="about" class="band-dark" style="padding: 48px 0 28px;">
+    <div class="wrap split split-even" style="align-items: start;">
+      <div>
+        <p style="font-family: var(--font-head); font-weight: 700; font-size: 26px; letter-spacing: -0.02em; margin-bottom: 10px;">{s.about.h2}</p>
+        <p class="muted" style="font-size: 15px; line-height: 1.6; max-width: 520px;">{s.about.body}</p>
+      </div>
+      <div class="muted" style="font-size: 15px; line-height: 1.7;">
+        <p>7192 Kalanianaʻole Hwy, Suite A143A<br />Honolulu, HI 96825</p>
+        <p style="margin-top: 8px;"><a href="mailto:leasing@anchorrentalshawaii.com">leasing@anchorrentalshawaii.com</a></p>
+      </div>
+    </div>
+    <div class="wrap muted" style="margin-top: 36px; padding-top: 18px; border-top: 1px solid #1F4347; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 12px;">
+      <span>{s.footer.legal}</span>
+      <span style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg>
+        {s.footer.eho} · <a href={`${root}/privacy/`}>{s.footer.privacy}</a> · <a href={s.footer.langHref}>{s.footer.lang}</a>
+      </span>
+    </div>
+  </footer>
+</body>
+</html>

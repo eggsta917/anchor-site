@@ -1,0 +1,92 @@
+---
+import UnitCard from './UnitCard.astro';
+import Waitlist from './Waitlist.astro';
+import { buildings, totalUnits } from '../data/buildings';
+import { getListings } from '../lib/appfolio';
+import { useT, type Lang } from '../i18n';
+interface Props { lang?: Lang }
+const { lang = 'en' } = Astro.props;
+const s = useT(lang);
+const root = lang === 'ja' ? '/ja' : '';
+const listings = await getListings();
+const firstYear = Math.min(...buildings.map((b) => b.completed));
+---
+<!-- hero -->
+<section class="section wrap" id="top">
+  <div class="split split-even">
+    <div>
+      <p class="eyebrow">{s.hero.eyebrow}</p>
+      <h1 style="margin-bottom: 20px;">{s.hero.h1}</h1>
+      <p class="lede" style="font-size: 19px; max-width: 520px; margin-bottom: 28px;">{s.hero.lede}</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 28px;">
+        <a href={`${root}/units/`} class="btn btn-primary">{s.hero.cta1}</a>
+        <a href={`${root}/eligibility/`} class="btn btn-outline">{s.hero.cta2}</a>
+      </div>
+      <p class="muted" style="font-size: 14px; display: flex; align-items: center; gap: 8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg>{s.hero.proof}
+      </p>
+    </div>
+    <div style="background: var(--gold); border-radius: 24px; min-height: 360px; display: flex; align-items: flex-end; padding: 24px; position: relative; overflow: hidden;">
+      <img src="/images/hero.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;" onerror="this.remove()" />
+      <div style="background: var(--cream); border-radius: 14px; padding: 16px 18px; display: flex; gap: 18px; align-items: center; position: relative;">
+        <div><p class="stat">{totalUnits}</p><p>{s.stats.units}</p></div>
+        <div style="width: 1px; height: 36px; background: var(--line);"></div>
+        <div><p class="stat">{buildings.length}</p><p>{s.stats.buildings}</p></div>
+        <div style="width: 1px; height: 36px; background: var(--line);"></div>
+        <div><p class="stat">{firstYear}</p><p>{s.stats.first}</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- units -->
+<section id="units" class="section band-dark">
+  <div class="wrap">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 28px;">
+      <div><p class="eyebrow" style="color: var(--gold);">{s.units.eyebrow}</p><h2>{s.units.h2}</h2></div>
+      <p class="muted" style="font-size: 14px;">{s.units.live}</p>
+    </div>
+    {listings.length ? (
+      <div class="grid grid-3">{listings.slice(0, 3).map((u) => <UnitCard u={u} lang={lang} />)}</div>
+    ) : (
+      <p class="lede">{s.units.none}</p>
+    )}
+    {listings.length > 3 && <p style="margin-top: 24px;"><a href={`${root}/units/`} class="btn btn-outline" style="border-color: var(--teal-muted); color: var(--cream);">{s.nav.units} →</a></p>}
+  </div>
+</section>
+
+<!-- buildings -->
+<section id="buildings" class="section wrap">
+  <p class="eyebrow">{s.buildings.eyebrow}</p>
+  <h2 style="margin-bottom: 12px;">{s.buildings.h2}</h2>
+  <p class="lede" style="margin-bottom: 32px;">{s.buildings.lede}</p>
+  <div class="grid grid-5">
+    {buildings.map((b) => (
+      <a href={`${root}/buildings/${b.slug}/`} class="tile">
+        <span class="area">{b.area}</span>
+        <span class="name">{b.name}</span>
+        <span class="muted" style="font-size: 14px;">{b.units} {s.buildings.apartments}</span>
+        <span class="status">{lang === 'ja' ? b.statusLabelJa : b.statusLabel}</span>
+      </a>
+    ))}
+  </div>
+</section>
+
+<!-- eligibility -->
+<section id="how" class="section band-gold">
+  <div class="wrap split" style="align-items: start;">
+    <div>
+      <p class="eyebrow">{s.how.eyebrow}</p>
+      <h2 style="margin-bottom: 16px;">{s.how.h2}</h2>
+      <p class="lede" style="margin-bottom: 24px;">{s.how.lede}</p>
+      <a href={`${root}/eligibility/`} class="btn btn-dark">{s.how.cta}</a>
+    </div>
+    <div class="grid grid-3" style="gap: 16px;">
+      {s.how.steps.map(([h, p], i) => (
+        <div class="step"><p class="n">STEP {i + 1}</p><h3>{h}</h3><p>{p}</p></div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<Waitlist lang={lang} />

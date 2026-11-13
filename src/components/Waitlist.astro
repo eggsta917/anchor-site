@@ -1,0 +1,58 @@
+---
+import type { Lang } from '../i18n';
+import { useT } from '../i18n';
+interface Props { lang?: Lang; propertyId?: string }
+const { lang = 'en', propertyId } = Astro.props;
+const s = useT(lang);
+---
+<section id="waitlist" class="section">
+  <div class="wrap">
+    <div class="split split-even" style="border: 1.5px solid var(--line); border-radius: 20px; padding: 28px; background: var(--white);">
+      <div>
+        <h2 style="font-size: 32px; margin-bottom: 10px;">{s.waitlist.h2}</h2>
+        <p class="lede" style="font-size: 16px;">{s.waitlist.lede}</p>
+      </div>
+      <form class="form-row" data-waitlist data-property={propertyId}>
+        <label for="wl-name" class="sr-only">{s.waitlist.name}</label>
+        <input id="wl-name" name="name" type="text" class="input" placeholder={s.waitlist.name} required autocomplete="name" />
+        <label for="wl-phone" class="sr-only">{s.waitlist.phone}</label>
+        <input id="wl-phone" name="phone" type="tel" class="input" placeholder={s.waitlist.phone} required autocomplete="tel" inputmode="tel" />
+        <input type="text" name="website" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
+        <button type="submit" class="btn btn-primary">{s.waitlist.cta}</button>
+        <p class="consent">{s.waitlist.consent}</p>
+        <p class="consent" data-done hidden style="color: var(--teal); font-weight: 600;">{s.waitlist.done}</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('form[data-waitlist]').forEach((form) => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fd = new FormData(form);
+      if (fd.get('website')) return; // honeypot
+      const [firstName, ...rest] = String(fd.get('name') ?? '').trim().split(/\s+/);
+      const body = {
+        firstName,
+        lastName: rest.join(' ') || '-',
+        phone: String(fd.get('phone') ?? ''),
+        propertyId: form.dataset.property || undefined,
+        source: 'waitlist',
+        smsConsent: true,
+        lang: document.documentElement.lang,
+      };
+      const btn = form.querySelector('button')!;
+      btn.disabled = true;
+      try {
+        const res = await fetch('/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+        if (!res.ok) throw new Error(String(res.status));
+        form.querySelectorAll('input, button').forEach((el) => ((el as HTMLElement).hidden = true));
+        form.querySelector<HTMLElement>('[data-done]')!.hidden = false;
+      } catch {
+        btn.disabled = false;
+        alert('Something went wrong. Please text or email us instead.');
+      }
+    });
+  });
+</script>

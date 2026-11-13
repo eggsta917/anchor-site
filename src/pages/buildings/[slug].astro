@@ -1,0 +1,48 @@
+---
+import Base from '../../layouts/Base.astro';
+import UnitCard from '../../components/UnitCard.astro';
+import Waitlist from '../../components/Waitlist.astro';
+import { buildings } from '../../data/buildings';
+import { getListings } from '../../lib/appfolio';
+
+export function getStaticPaths() {
+  return buildings.map((b) => ({ params: { slug: b.slug }, props: { b } }));
+}
+const { b } = Astro.props;
+const listings = (await getListings()).filter((u) => u.propertyName === b.name || u.address.startsWith(b.address.split(',')[0]));
+const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(b.address)}`;
+---
+<Base title={b.name} description={b.blurb} showBanner={false}>
+  <section class="section wrap">
+    <div class="split split-even" style="align-items: start;">
+      <div>
+        <p class="eyebrow">{b.area} · {b.units} apartments</p>
+        <h1 style="margin-bottom: 12px;">{b.name}</h1>
+        <p class="muted" style="margin-bottom: 20px;"><a href={mapUrl} rel="noopener" target="_blank">{b.address}</a></p>
+        <p class="lede" style="margin-bottom: 24px;">{b.blurb}</p>
+        <dl style="display: grid; grid-template-columns: auto 1fr; gap: 8px 20px; font-size: 15px;">
+          <dt class="muted">Completed</dt><dd style="margin: 0;">{b.completed}</dd>
+          {b.mix && <><dt class="muted">Unit mix</dt><dd style="margin: 0;">{b.mix}</dd></>}
+          {b.parking && <><dt class="muted">Parking</dt><dd style="margin: 0;">{b.parking}</dd></>}
+          <dt class="muted">Income limit</dt><dd style="margin: 0;">≤ 80% AMI · <a href="/eligibility/">see table</a></dd>
+          <dt class="muted">Status</dt><dd style="margin: 0; font-weight: 600; color: var(--teal);">{b.statusLabel}</dd>
+        </dl>
+      </div>
+      <div style="background: var(--teal-pale); border-radius: 24px; min-height: 320px; position: relative; overflow: hidden;">
+        <img src={`/images/${b.slug}.jpg`} alt={`${b.name} exterior`} style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;" onerror="this.remove()" />
+      </div>
+    </div>
+  </section>
+
+  {listings.length > 0 && (
+    <section class="section band-dark">
+      <div class="wrap">
+        <p class="eyebrow" style="color: var(--gold);">Now leasing</p>
+        <h2 style="margin-bottom: 28px;">Available at {b.name}</h2>
+        <div class="grid grid-3">{listings.map((u) => <UnitCard u={u} />)}</div>
+      </div>
+    </section>
+  )}
+
+  <Waitlist propertyId={b.slug} />
+</Base>

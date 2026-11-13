@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import { buildings, totalUnits } from '../data/buildings';
+---
+<Base title="About" showBanner={false}>
+  <section class="section wrap">
+    <p class="eyebrow">About</p>
+    <h1 style="margin-bottom: 12px;">Managed by the people who built it.</h1>
+    <p class="lede" style="margin-bottom: 24px;">Anchor Rentals is the leasing and management brand of Oceans Real Estate, a Honolulu brokerage and developer. Since 2022 we have delivered {buildings.length} workforce-housing buildings, {totalUnits} apartments in all, under the City's Bill 7 program, and we manage every one of them ourselves.</p>
+    <div class="split split-even" style="align-items: start; margin-top: 32px;">
+      <div class="step" style="background: var(--white); border: 1px solid var(--line);">
+        <h3>What Bill 7 is</h3>
+        <p>A City and County of Honolulu ordinance that lets small developers build rental housing on underused urban lots in exchange for keeping rents within reach of local working households for the long term. It is how we were able to build new in-town apartments that teachers, nurses and tradespeople can actually rent.</p>
+      </div>
+      <div class="step" style="background: var(--white); border: 1px solid var(--line);">
+        <h3>Why it matters that we manage our own buildings</h3>
+        <p>We know where every pipe runs, because we put it there. Maintenance requests go to people who know the building, not a call center reading from a file. And because the buildings are ours for the long haul, we have every reason to keep them in good shape.</p>
+      </div>
+    </div>
+    <div style="margin-top: 40px; font-size: 15px; line-height: 1.7;">
+      <p><strong>Anchor Rentals</strong> · a DBA of Oceans Real Estate LLC · Principal Broker Evan Amakata, RB-22133</p>
+      <p>7192 Kalanianaʻole Hwy, Suite A143A, Honolulu, HI 96825 · <a href="mailto:leasing@anchorrentalshawaii.com">leasing@anchorrentalshawaii.com</a></p>
+    </div>
+  </section>
+</Base>

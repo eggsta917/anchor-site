@@ -1,0 +1,88 @@
+---
+import Base from '../layouts/Base.astro';
+import Waitlist from '../components/Waitlist.astro';
+import { limits80, limitsYear, limitsEffective, limitsSource } from '../data/incomeLimits';
+const apply = import.meta.env.PUBLIC_APPLY_URL ?? '#';
+---
+<Base title="Do I qualify?" showBanner={false}>
+  <section class="section wrap">
+    <p class="eyebrow">Eligibility</p>
+    <h1 style="margin-bottom: 12px;">Do I qualify?</h1>
+    <p class="lede" style="margin-bottom: 32px;">Anchor apartments are reserved for households earning at or below 80% of the Honolulu area median income. Find your household size below; if your combined gross annual income is at or under that number, you qualify.</p>
+
+    <div class="split split-even" style="align-items: start;">
+      <div>
+        <div class="table-scroll">
+          <table class="limits">
+            <thead><tr><th>People in household</th><th>Max gross annual income</th><th>About per month</th></tr></thead>
+            <tbody>
+              {limits80.map((r) => (
+                <tr><td>{r.size}</td><td><strong>${r.income.toLocaleString()}</strong></td><td class="muted">${Math.round(r.income / 12).toLocaleString()}</td></tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="muted" style="font-size: 13px; margin-top: 10px;">{limitsYear} limits, effective {limitsEffective}. Source: <a href={limitsSource} rel="noopener" target="_blank">City &amp; County of Honolulu, DPP</a>. Limits are updated every spring.</p>
+      </div>
+
+      <div style="display: grid; gap: 16px;">
+        <div class="step" style="background: var(--white); border: 1px solid var(--line);">
+          <h3>Quick check</h3>
+          <form id="check" style="display: grid; gap: 10px; margin-top: 10px;">
+            <label for="hh" style="font-size: 14px;">People in your household</label>
+            <select id="hh" class="input">{limits80.map((r) => <option value={r.size}>{r.size}</option>)}</select>
+            <label for="inc" style="font-size: 14px;">Household gross annual income (before taxes)</label>
+            <input id="inc" class="input" type="number" inputmode="numeric" min="0" step="1000" placeholder="e.g. 72000" />
+            <button type="submit" class="btn btn-primary">Check</button>
+            <p id="result" style="font-weight: 600; min-height: 24px;" aria-live="polite"></p>
+          </form>
+        </div>
+        <div class="step" style="background: var(--white); border: 1px solid var(--line);">
+          <h3>What counts as income</h3>
+          <p>Wages, tips, self-employment, Social Security, pensions, child support and regular gifts, for every adult who will live in the unit. We verify with pay stubs, tax returns and third-party forms during certification.</p>
+        </div>
+        <div class="step" style="background: var(--white); border: 1px solid var(--line);">
+          <h3>What to have ready</h3>
+          <p>Government ID for each adult · last two months of pay stubs · last year's federal tax return · bank statements · proof of any other income. Students and self-employed applicants may need a few extra documents; we'll tell you which.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band-gold">
+    <div class="wrap split" style="align-items: start;">
+      <div><p class="eyebrow">How it works</p><h2>Three steps to keys.</h2></div>
+      <div class="grid grid-3" style="gap: 16px;">
+        <div class="step"><p class="n">STEP 1</p><h3>Check your income</h3><p>Compare your household's gross income to the table above for your household size.</p></div>
+        <div class="step"><p class="n">STEP 2</p><h3>Apply online</h3><p>Pick a unit and apply in about 15 minutes. Have pay stubs, ID and your last tax return ready.</p></div>
+        <div class="step"><p class="n">STEP 3</p><h3>Certify &amp; move in</h3><p>We verify your income, sign the lease, and hand you the keys. Recertification is once a year.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap" style="text-align: center;">
+    <h2 style="margin-bottom: 16px;">Think you qualify?</h2>
+    <a href={apply} class="btn btn-primary" rel="noopener">Start an application</a>
+  </section>
+
+  <Waitlist />
+</Base>
+
+<script define:vars={{ limits80 }}>
+  const form = document.getElementById('check');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const size = Number(document.getElementById('hh').value);
+    const inc = Number(document.getElementById('inc').value);
+    const row = limits80.find((r) => r.size === size);
+    const out = document.getElementById('result');
+    if (!inc || !row) { out.textContent = ''; return; }
+    if (inc <= row.income) {
+      out.style.color = 'var(--teal)';
+      out.textContent = `Looks like you qualify. The limit for ${size} is $${row.income.toLocaleString()}.`;
+    } else {
+      out.style.color = 'var(--gold-ink)';
+      out.textContent = `Over the limit for ${size} ($${row.income.toLocaleString()}). Join the waitlist anyway — limits rise most years.`;
+    }
+  });
+</script>
