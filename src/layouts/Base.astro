@@ -17,6 +17,7 @@ const apply = import.meta.env.PUBLIC_APPLY_URL ?? '#';
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{title} · Anchor Rentals</title>
   <meta name="description" content={description} />
+  {import.meta.env.PUBLIC_SITE_LIVE !== 'true' && <meta name="robots" content="noindex, nofollow" />}
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="alternate" hreflang="en" href="https://anchorrentalshawaii.com/" />
   <link rel="alternate" hreflang="ja" href="https://anchorrentalshawaii.com/ja/" />
