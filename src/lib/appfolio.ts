@@ -123,7 +123,7 @@ export const mockListings: Listing[] = [
     title: 'One-bedroom at Makiki Banyan',
     description: 'New one-bedroom in Makiki.',
     amenities: ['Air conditioning', 'In-unit laundry hookup', 'Secured entry'],
-    photos: [],
+    photos: [{ full: '/images/unit-1br.jpg', thumb: '/images/unit-1br.jpg' }],
     applicationUrl: env.PUBLIC_APPLY_URL ?? '#',
   },
   {
@@ -139,7 +139,7 @@ export const mockListings: Listing[] = [
     title: 'Two-bedroom at Makiki Banyan',
     description: 'New two-bedroom in Makiki.',
     amenities: ['Air conditioning', 'Secured entry'],
-    photos: [],
+    photos: [{ full: '/images/unit-1br.jpg', thumb: '/images/unit-1br.jpg' }],
     applicationUrl: env.PUBLIC_APPLY_URL ?? '#',
   },
 ];
