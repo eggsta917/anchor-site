@@ -15,6 +15,10 @@ export type Building = {
   parking?: string;
   /** true = a limited number of units are open to households above the 80% AMI limit */
   openIncome?: boolean;
+  /** images under /public/images, with captions */
+  plans?: { src: string; caption: string }[];
+  /** YouTube video id for a walkthrough */
+  videoId?: string;
 };
 
 // Launch portfolio. Earlier Bill 7 buildings (Ernest, Kinau, Algaroba, University)
@@ -36,6 +40,7 @@ export const buildings: Building[] = [
     mix: '80 × 1 bd (350 sq ft) · 10 × 2 bd (695 sq ft)',
     parking: '32 stalls',
     openIncome: true,
+    plans: [{ src: '/images/makiki-banyan-floorplan.jpg', caption: 'Typical floor, floors 2–6: 16 one-bedroom and 2 two-bedroom apartments around a central corridor. Individual unit plans coming soon.' }],
   },
   {
     slug: 'alapai-vista',

@@ -34,6 +34,28 @@ const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURICompo
     </div>
   </section>
 
+  {(b.plans?.length || b.videoId) && (
+    <section class="section" style="background: var(--white); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
+      <div class="wrap">
+        <p class="eyebrow">Plans &amp; tour</p>
+        <h2 style="margin-bottom: 28px;">Inside {b.name}</h2>
+        <div class="split split-even" style="align-items: start;">
+          {b.videoId && (
+            <div style="aspect-ratio: 16 / 9; border-radius: var(--radius-lg); overflow: hidden; background: var(--teal-pale);">
+              <iframe src={`https://www.youtube-nocookie.com/embed/${b.videoId}`} title={`${b.name} walkthrough`} style="width: 100%; height: 100%; border: 0;" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+            </div>
+          )}
+          {b.plans?.map((pl) => (
+            <figure style="margin: 0;">
+              <a href={pl.src} target="_blank" rel="noopener"><img src={pl.src} alt={`${b.name} floor plan`} style="border-radius: var(--radius-lg); border: 1px solid var(--line); width: 100%;" loading="lazy" /></a>
+              <figcaption class="muted" style="font-size: 13px; margin-top: 10px; line-height: 1.5;">{pl.caption} <span style="white-space: nowrap;">Tap to enlarge.</span></figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
   {listings.length > 0 && (
     <section class="section band-dark">
       <div class="wrap">
