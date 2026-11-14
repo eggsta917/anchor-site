@@ -2,13 +2,17 @@
 import Base from '../layouts/Base.astro';
 import Waitlist from '../components/Waitlist.astro';
 import { limits80, limitsYear, limitsEffective, limitsSource } from '../data/incomeLimits';
+import { buildings } from '../data/buildings';
+const openBuildings = buildings.filter((b) => b.openIncome);
+const openNames = openBuildings.map((b) => b.name);
 const apply = import.meta.env.PUBLIC_APPLY_URL ?? '#';
 ---
 <Base title="Do I qualify?" showBanner={false}>
   <section class="section wrap">
     <p class="eyebrow">Eligibility</p>
     <h1 style="margin-bottom: 12px;">Do I qualify?</h1>
-    <p class="lede" style="margin-bottom: 32px;">Anchor apartments are reserved for households earning at or below 80% of the Honolulu area median income. Find your household size below; if your combined gross annual income is at or under that number, you qualify.</p>
+    <p class="lede" style="margin-bottom: 20px;">Most Anchor apartments are reserved for households earning at or below 80% of the Honolulu area median income. Find your household size below; if your combined gross annual income is at or under that number, you qualify at every building.</p>
+    <p class="lede" style="margin-bottom: 32px;"><strong>Earn more than the limit?</strong> At {openNames.length === 2 ? `${openNames[0]} and ${openNames[1]}` : openNames.join(', ')}, a limited number of apartments are open to households of any income. Those units are marked <strong>Open to all incomes</strong> in our listings, and you apply the same way.</p>
 
     <div class="split split-even" style="align-items: start;">
       <div>
@@ -68,7 +72,7 @@ const apply = import.meta.env.PUBLIC_APPLY_URL ?? '#';
   <Waitlist />
 </Base>
 
-<script define:vars={{ limits80 }}>
+<script define:vars={{ limits80, openNames }}>
   const form = document.getElementById('check');
   form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -81,8 +85,8 @@ const apply = import.meta.env.PUBLIC_APPLY_URL ?? '#';
       out.style.color = 'var(--teal)';
       out.textContent = `Looks like you qualify. The limit for ${size} is $${row.income.toLocaleString()}.`;
     } else {
-      out.style.color = 'var(--gold-ink)';
-      out.textContent = `Over the limit for ${size} ($${row.income.toLocaleString()}). Join the waitlist anyway — limits rise most years.`;
+      out.style.color = 'var(--teal-dark)';
+      out.textContent = `Over the 80% limit for ${size} ($${row.income.toLocaleString()}), so the income-qualified units aren't a fit — but you can still apply for the units marked "Open to all incomes" at ${openNames.length === 2 ? openNames[0] + ' and ' + openNames[1] : openNames.join(', ')}.`;
     }
   });
 </script>

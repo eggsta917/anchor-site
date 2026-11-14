@@ -2,8 +2,8 @@
 import type { Listing } from '../lib/appfolio';
 import type { Lang } from '../i18n';
 import { useT } from '../i18n';
-interface Props { u: Listing; lang?: Lang }
-const { u, lang = 'en' } = Astro.props;
+interface Props { u: Listing; lang?: Lang; openIncome?: boolean }
+const { u, lang = 'en', openIncome = false } = Astro.props;
 const s = useT(lang);
 const rent = u.rent > 0 ? `$${u.rent.toLocaleString()}` : '$[RENT]';
 const avail = u.availableOn ? new Date(u.availableOn + 'T12:00:00').toLocaleDateString(lang === 'ja' ? 'ja-JP' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
@@ -18,7 +18,8 @@ const spec = [`${u.bedrooms} bd`, `${u.bathrooms} ba`, u.squareFeet ? `${u.squar
     <h3>{u.propertyName}</h3>
     <p class="muted" style="font-size: 14px;">{spec}</p>
     <p class="price">{rent}<small> {s.units.mo}</small></p>
-    <p class="muted" style="font-size: 13px; margin-bottom: 14px;">{s.units.available} {avail}</p>
+    <p class="muted" style="font-size: 13px;">{s.units.available} {avail}</p>
+    <p style="font-size: 12px; font-weight: 600; margin-bottom: 14px; color: var(--teal);">{openIncome ? s.how.openTag : s.how.qualTag}</p>
     <a href={u.applicationUrl} class="btn btn-primary" style="margin-top: auto;" rel="noopener">{s.units.apply}</a>
   </div>
 </article>

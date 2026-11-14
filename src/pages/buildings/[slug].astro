@@ -24,7 +24,7 @@ const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURICompo
           <dt class="muted">Completed</dt><dd style="margin: 0;">{b.completed}</dd>
           {b.mix && <><dt class="muted">Unit mix</dt><dd style="margin: 0;">{b.mix}</dd></>}
           {b.parking && <><dt class="muted">Parking</dt><dd style="margin: 0;">{b.parking}</dd></>}
-          <dt class="muted">Income limit</dt><dd style="margin: 0;">≤ 80% AMI · <a href="/eligibility/">see table</a></dd>
+          <dt class="muted">Income limit</dt><dd style="margin: 0;">{b.openIncome ? <>Most units ≤ 80% AMI; a limited number open to all incomes · <a href="/eligibility/">details</a></> : <>≤ 80% AMI · <a href="/eligibility/">see table</a></>}</dd>
           <dt class="muted">Status</dt><dd style="margin: 0; font-weight: 600; color: var(--teal);">{b.statusLabel}</dd>
         </dl>
       </div>
@@ -39,7 +39,7 @@ const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURICompo
       <div class="wrap">
         <p class="eyebrow" style="color: var(--gold);">Now leasing</p>
         <h2 style="margin-bottom: 28px;">Available at {b.name}</h2>
-        <div class="grid grid-3">{listings.map((u) => <UnitCard u={u} />)}</div>
+        <div class="grid grid-3">{listings.map((u) => <UnitCard u={u} openIncome={b.openIncome} />)}</div>
       </div>
     </section>
   )}

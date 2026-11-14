@@ -47,7 +47,7 @@ const firstYear = Math.min(...buildings.map((b) => b.completed));
       <p class="muted" style="font-size: 14px;">{s.units.live}</p>
     </div>
     {listings.length ? (
-      <div class="grid grid-3">{listings.slice(0, 3).map((u) => <UnitCard u={u} lang={lang} />)}</div>
+      <div class="grid grid-3">{listings.slice(0, 3).map((u) => <UnitCard u={u} lang={lang} openIncome={buildings.find((b) => b.name === u.propertyName)?.openIncome} />)}</div>
     ) : (
       <p class="lede">{s.units.none}</p>
     )}
@@ -67,6 +67,7 @@ const firstYear = Math.min(...buildings.map((b) => b.completed));
         <span class="name">{b.name}</span>
         <span class="muted" style="font-size: 14px;">{b.units} {s.buildings.apartments}</span>
         <span class="status">{lang === 'ja' ? b.statusLabelJa : b.statusLabel}</span>
+        {b.openIncome && <span style="font-size: 12px; font-weight: 600; color: var(--teal);">{s.how.openTag}</span>}
       </a>
     ))}
   </div>

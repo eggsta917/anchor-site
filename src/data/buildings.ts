@@ -12,6 +12,8 @@ export type Building = {
   blurbJa: string;
   mix?: string;
   parking?: string;
+  /** true = a limited number of units are open to households above the 80% AMI limit */
+  openIncome?: boolean;
 };
 
 export const buildings: Building[] = [
@@ -30,6 +32,21 @@ export const buildings: Building[] = [
     blurbJa: '1ベッド80戸・2ベッド10戸の当社最大の物件。マキキ・ディストリクト・パーク至近、駐車場32台。',
     mix: '80 × 1 bd (350 sq ft) · 10 × 2 bd (695 sq ft)',
     parking: '32 stalls',
+    openIncome: true,
+  },
+  {
+    slug: 'alapai-vista',
+    name: 'Alapai Vista',
+    address: '1617 Alapai St, Honolulu, HI 96822',
+    area: 'Makiki',
+    units: 53,
+    completed: 2026,
+    status: 'leasing',
+    statusLabel: 'Leasing soon',
+    statusLabelJa: '近日入居者募集開始',
+    blurb: 'Fifty-three new apartments on Alapai Street, between Makiki and downtown, a short walk to Queen\u2019s Medical Center and the bus lines on Beretania.',
+    blurbJa: 'アラパイ・ストリートの新築53戸。マキキとダウンタウンの間、クイーンズ・メディカル・センターやベレタニア通りのバス路線へ徒歩圏。',
+    openIncome: true,
   },
   {
     slug: '902-university',
