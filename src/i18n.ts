@@ -3,7 +3,7 @@ export type Lang = 'en' | 'ja';
 export const t = {
   en: {
     nav: { units: 'Available units', buildings: 'Our buildings', eligibility: 'Eligibility', about: 'About', resident: 'Resident login', apply: 'Apply now' },
-    banner: 'Makiki Banyan opens January 2027 — 90 new apartments.',
+    banner: 'Three new buildings open January 2027 — join the waitlist now.',
     bannerCta: 'Get on the list →',
     hero: {
       eyebrow: 'Honolulu · Workforce rentals',
@@ -32,7 +32,7 @@ export const t = {
   },
   ja: {
     nav: { units: '空室情報', buildings: '物件一覧', eligibility: '入居条件', about: '会社概要', resident: '入居者ログイン', apply: '申込み' },
-    banner: 'マキキ・バンヤン 2027年1月オープン — 新築90戸',
+    banner: '2027年1月、新築3棟が入居開始 — ウェイトリスト受付中',
     bannerCta: 'ウェイトリストに登録 →',
     hero: {
       eyebrow: 'ホノルル · ワークフォース住宅',
