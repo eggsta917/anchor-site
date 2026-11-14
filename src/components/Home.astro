@@ -1,7 +1,7 @@
 ---
 import UnitCard from './UnitCard.astro';
 import Waitlist from './Waitlist.astro';
-import { buildings, knownUnits, allUnitsKnown } from '../data/buildings';
+import { buildings, planFor, knownUnits, allUnitsKnown } from '../data/buildings';
 import { getListings } from '../lib/appfolio';
 import { useT, type Lang } from '../i18n';
 interface Props { lang?: Lang }
@@ -47,7 +47,7 @@ const listings = await getListings();
       <p class="muted" style="font-size: 14px;">{s.units.live}</p>
     </div>
     {listings.length ? (
-      <div class="grid grid-3">{listings.slice(0, 3).map((u) => <UnitCard u={u} lang={lang} openIncome={buildings.find((b) => b.name === u.propertyName)?.openIncome} />)}</div>
+      <div class="grid grid-3">{listings.slice(0, 3).map((u) => <UnitCard u={u} lang={lang} openIncome={buildings.find((b) => b.name === u.propertyName)?.openIncome} planSrc={planFor(u.propertyName, u.bedrooms)} />)}</div>
     ) : (
       <p class="lede">{s.units.none}</p>
     )}

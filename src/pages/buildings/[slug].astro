@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import UnitCard from '../../components/UnitCard.astro';
 import Waitlist from '../../components/Waitlist.astro';
-import { buildings } from '../../data/buildings';
+import { buildings, planFor } from '../../data/buildings';
 import { getListings } from '../../lib/appfolio';
 
 export function getStaticPaths() {
@@ -61,7 +61,7 @@ const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURICompo
       <div class="wrap">
         <p class="eyebrow" style="color: var(--gold);">Now leasing</p>
         <h2 style="margin-bottom: 28px;">Available at {b.name}</h2>
-        <div class="grid grid-3">{listings.map((u) => <UnitCard u={u} openIncome={b.openIncome} />)}</div>
+        <div class="grid grid-3">{listings.map((u) => <UnitCard u={u} openIncome={b.openIncome} planSrc={planFor(u.propertyName, u.bedrooms)} />)}</div>
       </div>
     </section>
   )}

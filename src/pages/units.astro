@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import UnitCard from '../components/UnitCard.astro';
 import Waitlist from '../components/Waitlist.astro';
 import { getListings } from '../lib/appfolio';
-import { buildings } from '../data/buildings';
+import { buildings, planFor } from '../data/buildings';
 const listings = await getListings();
 ---
 <Base title="Available units" showBanner={false}>
@@ -12,7 +12,7 @@ const listings = await getListings();
     <h1 style="margin-bottom: 12px;">Available units</h1>
     <p class="lede" style="margin-bottom: 32px;">Most units are income-qualified: your household must earn at or below 80% of Honolulu's area median income. Units marked <strong>Open to all incomes</strong> have no income cap. <a href="/eligibility/">Check the limits</a> before you apply.</p>
     {listings.length ? (
-      <div class="grid grid-3">{listings.map((u) => <UnitCard u={u} openIncome={buildings.find((b) => b.name === u.propertyName)?.openIncome} />)}</div>
+      <div class="grid grid-3">{listings.map((u) => <UnitCard u={u} openIncome={buildings.find((b) => b.name === u.propertyName)?.openIncome} planSrc={planFor(u.propertyName, u.bedrooms)} />)}</div>
     ) : (
       <p class="lede">Nothing is open at the moment. Join the waitlist below and we'll text you first.</p>
     )}

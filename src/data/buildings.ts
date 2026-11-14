@@ -40,7 +40,11 @@ export const buildings: Building[] = [
     mix: '80 × 1 bd (350 sq ft) · 10 × 2 bd (695 sq ft)',
     parking: '32 stalls',
     openIncome: true,
-    plans: [{ src: '/images/makiki-banyan-floorplan.jpg', caption: 'Typical floor, floors 2–6: 16 one-bedroom and 2 two-bedroom apartments around a central corridor. Individual unit plans coming soon.' }],
+    plans: [
+      { src: '/images/makiki-banyan-1br.jpg', caption: 'One-bedroom: 20′4″ × 19′0″. Separate bedroom (12′2″ × 9′3″), living/dining (12′2″ × 9′5″), full kitchen with breakfast bar, in-unit washer/dryer closet, through-wall A/C.' },
+      { src: '/images/makiki-banyan-2br.jpg', caption: 'Two-bedroom: 40′0″ × 20′4″. Two bedrooms (12′0″ × 9′7″ and 12′0″ × 9′6″), open living/dining, kitchen 8′6″ × 11′4″, washer/dryer closet. Two per floor, corner units.' },
+      { src: '/images/makiki-banyan-floorplan.jpg', caption: 'Typical floor, floors 2–6: 16 one-bedroom and 2 two-bedroom apartments around a central corridor.' },
+    ],
   },
   {
     slug: 'alapai-vista',
@@ -88,3 +92,11 @@ export const buildings: Building[] = [
 
 export const knownUnits = buildings.reduce((n, b) => n + (b.units ?? 0), 0);
 export const allUnitsKnown = buildings.every((b) => b.units !== null);
+
+/** Floor-plan image for a listing, matched by building and bedroom count. */
+export function planFor(propertyName: string, bedrooms: number): string | undefined {
+  const b = buildings.find((x) => x.name === propertyName);
+  if (!b?.plans) return undefined;
+  const key = bedrooms >= 2 ? '2br' : '1br';
+  return b.plans.find((p) => p.src.includes(`-${key}.`))?.src;
+}
