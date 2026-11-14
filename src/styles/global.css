@@ -76,6 +76,7 @@ img { max-width: 100%; display: block; }
 .grid { display: grid; gap: 20px; }
 .grid-3 { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
 .grid-5 { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+.grid-4 { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
 .split { display: grid; gap: 32px; grid-template-columns: 1fr; align-items: center; }
 @media (min-width: 900px) { .split { grid-template-columns: 5fr 7fr; } .split-even { grid-template-columns: 1fr 1fr; } }
 
@@ -98,6 +99,10 @@ img { max-width: 100%; display: block; }
 .tile .area { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); }
 .tile .name { font-size: 17px; font-weight: 600; }
 .tile .status { margin-top: auto; font-size: 13px; font-weight: 500; }
+.tile-photo { padding: 0; overflow: hidden; gap: 0; }
+.tile-photo img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; }
+.tile-photo .tile-body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.tile-photo .status { margin-top: 10px; }
 
 .step { background: var(--cream); border-radius: 14px; padding: 22px; }
 .step .n { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; color: var(--teal); margin-bottom: 8px; }

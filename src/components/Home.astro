@@ -61,14 +61,18 @@ const listings = await getListings();
   <p class="eyebrow">{s.buildings.eyebrow}</p>
   <h2 style="margin-bottom: 12px;">{s.buildings.h2}</h2>
   <p class="lede" style="margin-bottom: 32px;">{s.buildings.lede}</p>
-  <div class="grid grid-5">
+  <div class="grid grid-4">
     {buildings.map((b) => (
-      <a href={`${root}/buildings/${b.slug}/`} class="tile" data-building={b.slug}>
-        <span class="area">{b.area}</span>
-        <span class="name">{b.name}</span>
-        <span class="muted" style="font-size: 14px;">{b.units ? `${b.units} ${s.buildings.apartments}` : s.buildings.newBuild}</span>
-        <span class="status">{lang === 'ja' ? b.statusLabelJa : b.statusLabel}</span>
-        {b.openIncome && <span style="font-size: 12px; font-weight: 600; color: var(--teal);">{s.how.openTag}</span>}
+      <a href={`${root}/buildings/${b.slug}/`} class="tile tile-photo" data-building={b.slug}>
+        <img src={`/images/${b.slug}.jpg`} alt="" loading="lazy" onerror="this.remove()" />
+        <div class="tile-body">
+          <span class="area">{b.area}</span>
+          <span class="name">{b.name}</span>
+          <span class="muted" style="font-size: 13px;">{b.address.replace(/, Honolulu.*$/, '')}</span>
+          <span class="muted" style="font-size: 13px;">{b.units ? `${b.units} ${s.buildings.apartments}` : s.buildings.newBuild}</span>
+          <span class="status">{lang === 'ja' ? b.statusLabelJa : b.statusLabel}</span>
+          {b.openIncome && <span style="font-size: 12px; font-weight: 600; color: var(--teal);">{s.how.openTag}</span>}
+        </div>
       </a>
     ))}
   </div>

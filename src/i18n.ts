@@ -15,11 +15,13 @@ export const t = {
     },
     stats: { units: 'new apartments', buildings: 'new buildings', first: 'first move-ins' },
     units: { eyebrow: 'Now leasing', h2: 'Available units', live: 'Updated live from our leasing system', apply: 'Apply', mo: '/ mo', available: 'Available', waitlist: 'Join waitlist', none: 'Nothing open at the moment. Join the waitlist below and we’ll text you first.' },
-    buildings: { eyebrow: 'Our buildings', h2: 'Built in Honolulu, for Honolulu.', lede: 'Every Anchor building was developed under the City’s Bill 7 workforce-housing program, which trades property-tax relief for a long-term promise: rents stay within reach of local working households.', apartments: 'apartments' },
+    buildings: { eyebrow: 'Our buildings', h2: 'Built in Honolulu, for Honolulu.', lede: 'Every Anchor building is new construction developed under the City’s Bill 7 workforce-housing program, which trades property-tax relief for a long-term promise: rents stay within reach of local working households.', apartments: 'apartments', newBuild: 'New construction' },
     how: {
       eyebrow: 'Eligibility', h2: 'Do I qualify?',
-      lede: 'Anchor apartments are for households earning at or below 80% of the Honolulu area median income, as published each year by HUD. Limits depend on how many people live with you.',
+      lede: 'Most Anchor apartments are reserved for households earning at or below 80% of the Honolulu area median income. At some buildings, a limited number of units are open to households above that limit.',
       cta: 'See this year’s income limits',
+      openTag: 'Open to all incomes',
+      qualTag: 'Income-qualified',
       steps: [
         ['Check your income', 'Compare your household’s gross income to the 80% AMI table for your household size.'],
         ['Apply online', 'Pick a unit and apply in about 15 minutes. Have pay stubs, ID and your last tax return ready.'],
