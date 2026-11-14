@@ -94,7 +94,7 @@ img { max-width: 100%; display: block; }
   text-decoration: none; color: var(--teal-dark); border: 1.5px solid var(--line); border-radius: var(--radius-lg);
   padding: 18px; display: flex; flex-direction: column; gap: 6px; min-height: 150px; background: var(--white);
 }
-.tile:hover { border-color: var(--teal); color: var(--teal-dark); }
+.tile:hover, .tile.is-active { border-color: var(--teal); color: var(--teal-dark); box-shadow: 0 0 0 3px var(--teal-pale); }
 .tile .area { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); }
 .tile .name { font-size: 17px; font-weight: 600; }
 .tile .status { margin-top: auto; font-size: 13px; font-weight: 500; }

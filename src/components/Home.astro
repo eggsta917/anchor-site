@@ -63,7 +63,7 @@ const listings = await getListings();
   <p class="lede" style="margin-bottom: 32px;">{s.buildings.lede}</p>
   <div class="grid grid-5">
     {buildings.map((b) => (
-      <a href={`${root}/buildings/${b.slug}/`} class="tile">
+      <a href={`${root}/buildings/${b.slug}/`} class="tile" data-building={b.slug}>
         <span class="area">{b.area}</span>
         <span class="name">{b.name}</span>
         <span class="muted" style="font-size: 14px;">{b.units ? `${b.units} ${s.buildings.apartments}` : s.buildings.newBuild}</span>
