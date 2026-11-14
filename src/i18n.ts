@@ -8,7 +8,7 @@ export const t = {
     hero: {
       eyebrow: 'Honolulu · Workforce rentals',
       h1: 'A home in town, at a rent that makes sense.',
-      lede: 'New, professionally managed apartments in Makiki, Moʻiliʻili and Kaimukī, reserved for Oʻahu households earning up to 80% of area median income.',
+      lede: 'New, professionally managed apartments in Makiki, Punchbowl and Moʻiliʻili, reserved for Oʻahu households earning up to 80% of area median income.',
       cta1: 'See available units',
       cta2: 'Check if I qualify',
       proof: 'Built and managed by Oceans Real Estate under Honolulu’s Bill 7 program',
@@ -37,7 +37,7 @@ export const t = {
     hero: {
       eyebrow: 'ホノルル · ワークフォース住宅',
       h1: '街なかに、無理のない家賃の住まいを。',
-      lede: 'マキキ、モイリイリ、カイムキの新築アパート。世帯収入がエリア中央値（AMI）の80%以下のオアフ島在住世帯が対象です。',
+      lede: 'マキキ、パンチボウル、モイリイリの新築アパート。世帯収入がエリア中央値（AMI）の80%以下のオアフ島在住世帯が対象です。',
       cta1: '空室を見る',
       cta2: '入居条件を確認',
       proof: 'ホノルル市Bill 7プログラムに基づき、オーシャンズ不動産が開発・管理',

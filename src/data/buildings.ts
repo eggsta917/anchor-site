@@ -53,7 +53,7 @@ export const buildings: Building[] = [
     slug: 'alapai-vista',
     name: 'Alapai Vista',
     address: '1617 Alapai St, Honolulu, HI 96813',
-    area: 'Makiki',
+    area: 'Punchbowl',
     lat: 21.30917, lng: -157.84869,
     units: 53,
     completed: 2026,
@@ -61,8 +61,8 @@ export const buildings: Building[] = [
     statusLabel: 'Leasing soon',
     statusLabelJa: '近日入居者募集開始',
     blurb:
-      'Fifty-three new apartments on Alapai Street, between Makiki and downtown, a short walk to Queen’s Medical Center and the bus lines on Beretania.',
-    blurbJa: 'アラパイ・ストリートの新築53戸。マキキとダウンタウンの間、クイーンズ・メディカル・センターやベレタニア通りのバス路線へ徒歩圏。',
+      'Fifty-three new apartments on Alapai Street in Punchbowl, between Makiki and downtown, a short walk to Queen’s Medical Center and the bus lines on Beretania.',
+    blurbJa: 'パンチボウル地区アラパイ・ストリートの新築53戸。マキキとダウンタウンの間、クイーンズ・メディカル・センターやベレタニア通りのバス路線へ徒歩圏。',
     openIncome: true,
   },
   {
