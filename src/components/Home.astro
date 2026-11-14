@@ -1,6 +1,7 @@
 ---
 import UnitCard from './UnitCard.astro';
 import Waitlist from './Waitlist.astro';
+import BuildingsMap from './BuildingsMap.astro';
 import { buildings, planFor, knownUnits, allUnitsKnown } from '../data/buildings';
 import { getListings } from '../lib/appfolio';
 import { useT, type Lang } from '../i18n';
@@ -71,6 +72,7 @@ const listings = await getListings();
       </a>
     ))}
   </div>
+  <div style="margin-top: 24px;"><BuildingsMap lang={lang} height="420px" /></div>
 </section>
 
 <!-- eligibility -->

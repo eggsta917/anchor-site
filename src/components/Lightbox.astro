@@ -1,0 +1,35 @@
+---
+// One per page. Any <a data-lightbox href="image.jpg"> opens here instead of a new tab.
+---
+<dialog id="lightbox" aria-label="Floor plan" style="border: 0; padding: 0; background: transparent; max-width: 100vw; max-height: 100vh; width: 100%; height: 100%; margin: 0;">
+  <div data-lb-backdrop style="position: fixed; inset: 0; background: rgba(16, 42, 46, 0.94); display: flex; align-items: center; justify-content: center; padding: 16px;">
+    <button type="button" data-lb-close aria-label="Close" style="position: fixed; top: 16px; right: 16px; width: 44px; height: 44px; border-radius: 999px; border: 0; background: var(--cream); color: var(--teal-dark); cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+    </button>
+    <figure style="margin: 0; max-width: 1100px; width: 100%; display: flex; flex-direction: column; gap: 12px; align-items: center;">
+      <img data-lb-img src="" alt="" style="max-width: 100%; max-height: calc(100vh - 110px); object-fit: contain; border-radius: 12px; background: var(--cream);" />
+      <figcaption data-lb-cap style="color: var(--cream); font-size: 14px; text-align: center; max-width: 720px; line-height: 1.5;"></figcaption>
+    </figure>
+  </div>
+</dialog>
+
+<script>
+  const dlg = document.getElementById('lightbox') as HTMLDialogElement | null;
+  if (dlg) {
+    const img = dlg.querySelector<HTMLImageElement>('[data-lb-img]')!;
+    const cap = dlg.querySelector<HTMLElement>('[data-lb-cap]')!;
+    const close = () => { dlg.close(); };
+    document.querySelectorAll<HTMLAnchorElement>('a[data-lightbox]').forEach((a) => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        img.src = a.href;
+        img.alt = a.getAttribute('aria-label') || a.dataset.caption || 'Floor plan';
+        cap.textContent = a.dataset.caption || '';
+        dlg.showModal();
+      });
+    });
+    dlg.querySelector('[data-lb-close]')!.addEventListener('click', close);
+    dlg.querySelector('[data-lb-backdrop]')!.addEventListener('click', (e) => { if (e.target === e.currentTarget) close(); });
+    dlg.addEventListener('close', () => { img.src = ''; });
+  }
+</script>

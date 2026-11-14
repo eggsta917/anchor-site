@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Logo from '../components/Logo.astro';
+import Lightbox from '../components/Lightbox.astro';
 import { useT, type Lang } from '../i18n';
 
 interface Props { title: string; description?: string; lang?: Lang; showBanner?: boolean }
@@ -49,6 +50,7 @@ const apply = import.meta.env.PUBLIC_APPLY_URL ?? '#';
   </header>
 
   <main><slot /></main>
+  <Lightbox />
 
   <footer id="about" class="band-dark" style="padding: 48px 0 28px;">
     <div class="wrap split split-even" style="align-items: start;">

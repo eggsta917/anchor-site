@@ -22,7 +22,7 @@ const spec = [`${u.bedrooms} bd`, `${u.bathrooms} ba`, u.squareFeet ? `${u.squar
     <p style="font-size: 12px; font-weight: 600; margin-bottom: 14px; color: var(--teal);">{openIncome ? s.how.openTag : s.how.qualTag}</p>
     <div style="display: flex; gap: 8px; margin-top: auto;">
       <a href={u.applicationUrl} class="btn btn-primary" style="flex: 1;" rel="noopener">{s.units.apply}</a>
-      {planSrc && <a href={planSrc} class="btn btn-outline" target="_blank" rel="noopener" aria-label="Floor plan" style="padding-inline: 14px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M3 12h9V3M12 12v9"></path></svg>{lang === 'ja' ? '間取り' : 'Plan'}</a>}
+      {planSrc && <a href={planSrc} data-lightbox data-caption={`${u.propertyName} · ${u.bedrooms} bedroom floor plan`} class="btn btn-outline" aria-label="Floor plan" style="padding-inline: 14px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M3 12h9V3M12 12v9"></path></svg>{lang === 'ja' ? '間取り' : 'Plan'}</a>}
     </div>
   </div>
 </article>

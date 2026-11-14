@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import UnitCard from '../../components/UnitCard.astro';
 import Waitlist from '../../components/Waitlist.astro';
 import { buildings, planFor } from '../../data/buildings';
+import BuildingsMap from '../../components/BuildingsMap.astro';
 import { getListings } from '../../lib/appfolio';
 
 export function getStaticPaths() {
@@ -47,7 +48,7 @@ const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURICompo
           )}
           {b.plans?.map((pl) => (
             <figure style="margin: 0;">
-              <a href={pl.src} target="_blank" rel="noopener"><img src={pl.src} alt={`${b.name} floor plan`} style="border-radius: var(--radius-lg); border: 1px solid var(--line); width: 100%;" loading="lazy" /></a>
+              <a href={pl.src} data-lightbox data-caption={pl.caption}><img src={pl.src} alt={`${b.name} floor plan`} style="border-radius: var(--radius-lg); border: 1px solid var(--line); width: 100%;" loading="lazy" /></a>
               <figcaption class="muted" style="font-size: 13px; margin-top: 10px; line-height: 1.5;">{pl.caption} <span style="white-space: nowrap;">Tap to enlarge.</span></figcaption>
             </figure>
           ))}
@@ -65,6 +66,12 @@ const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURICompo
       </div>
     </section>
   )}
+
+  <section class="section wrap">
+    <p class="eyebrow">Location</p>
+    <h2 style="margin-bottom: 20px;">Getting there</h2>
+    <BuildingsMap height="380px" focus={b.slug} />
+  </section>
 
   <Waitlist propertyId={b.slug} />
 </Base>

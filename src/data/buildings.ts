@@ -19,6 +19,8 @@ export type Building = {
   plans?: { src: string; caption: string }[];
   /** YouTube video id for a walkthrough */
   videoId?: string;
+  lat: number;
+  lng: number;
 };
 
 // Launch portfolio. Earlier Bill 7 buildings (Ernest, Kinau, Algaroba, University)
@@ -29,6 +31,7 @@ export const buildings: Building[] = [
     name: 'Makiki Banyan',
     address: '1568 Pensacola St, Honolulu, HI 96822',
     area: 'Makiki',
+    lat: 21.30708, lng: -157.84176,
     units: 90,
     completed: 2026,
     status: 'leasing',
@@ -49,8 +52,9 @@ export const buildings: Building[] = [
   {
     slug: 'alapai-vista',
     name: 'Alapai Vista',
-    address: '1617 Alapai St, Honolulu, HI 96822',
+    address: '1617 Alapai St, Honolulu, HI 96813',
     area: 'Makiki',
+    lat: 21.30917, lng: -157.84869,
     units: 53,
     completed: 2026,
     status: 'soon',
@@ -66,6 +70,7 @@ export const buildings: Building[] = [
     name: 'Piikoi Flats',
     address: '1525 Piikoi St, Honolulu, HI 96822',
     area: 'Makiki',
+    lat: 21.30475, lng: -157.84087,
     units: null,
     completed: 2027,
     status: 'soon',
@@ -80,6 +85,7 @@ export const buildings: Building[] = [
     name: '2958 Varsity',
     address: '2958 Varsity Pl, Honolulu, HI 96826',
     area: 'Moʻiliʻili',
+    lat: 21.29269, lng: -157.81877,
     units: null,
     completed: 2027,
     status: 'soon',

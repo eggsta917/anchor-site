@@ -1,0 +1,59 @@
+---
+import { buildings } from '../data/buildings';
+import type { Lang } from '../i18n';
+interface Props { lang?: Lang; height?: string; focus?: string }
+const { lang = 'en', height = '460px', focus } = Astro.props;
+const root = lang === 'ja' ? '/ja' : '';
+const pins = buildings.map((b) => ({
+  slug: b.slug, name: b.name, lat: b.lat, lng: b.lng, area: b.area,
+  status: lang === 'ja' ? b.statusLabelJa : b.statusLabel,
+  units: b.units, href: `${root}/buildings/${b.slug}/`,
+  gmaps: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(b.address)}`,
+}));
+const t = lang === 'ja' ? { details: '詳細を見る', directions: 'Google マップで開く', apts: '戸' } : { details: 'View building', directions: 'Open in Google Maps', apts: 'apartments' };
+---
+<div id="buildings-map" data-pins={JSON.stringify(pins)} data-focus={focus} data-t={JSON.stringify(t)} style={`height: ${height}; border-radius: var(--radius-lg); border: 1px solid var(--line); overflow: hidden; background: var(--teal-pale);`} role="region" aria-label="Map of Anchor Rentals buildings"></div>
+<script>
+  import L from 'leaflet';
+  import 'leaflet/dist/leaflet.css';
+  (function () {
+    var el = document.getElementById('buildings-map') as HTMLElement | null;
+    if (!el) return;
+    var pins = JSON.parse(el.dataset.pins!);
+    var t = JSON.parse(el.dataset.t!);
+    var focus = el.dataset.focus;
+    var map = L.map(el, { scrollWheelZoom: false });
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      maxZoom: 19,
+    }).addTo(map);
+    var icon = L.divIcon({
+      className: '',
+      html: '<svg width="34" height="44" viewBox="0 0 34 44" aria-hidden="true"><path d="M17 43c7-11 15-18 15-26A15 15 0 0 0 2 17c0 8 8 15 15 26z" fill="#0E6E63" stroke="#FFFDF7" stroke-width="2"/><path d="M17 9v14M12.5 19.5c1.3 2.6 3 3.5 4.5 3.5s3.2-.9 4.5-3.5M13.5 12h7" stroke="#FFFDF7" stroke-width="2" stroke-linecap="round" fill="none"/><circle cx="17" cy="8" r="1.6" fill="#FFFDF7"/></svg>',
+      iconSize: [34, 44], iconAnchor: [17, 43], popupAnchor: [0, -40],
+    });
+    var bounds: [number, number][] = [];
+    pins.forEach(function (p: any) {
+      var m = L.marker([p.lat, p.lng], { icon: icon, title: p.name }).addTo(map);
+      var units = p.units ? p.units + ' ' + t.apts + ' · ' : '';
+      m.bindPopup(
+        '<div style="font-family: Inter, system-ui, sans-serif; min-width: 200px">' +
+        '<div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#0E6E63">' + p.area + '</div>' +
+        '<div style="font-size:16px;font-weight:700;margin:2px 0 4px">' + p.name + '</div>' +
+        '<div style="font-size:13px;color:#3F5B5E">' + units + p.status + '</div>' +
+        '<div style="display:flex;gap:12px;margin-top:10px;font-size:13px;font-weight:600">' +
+        '<a href="' + p.href + '" style="color:#0E6E63">' + t.details + ' →</a>' +
+        '<a href="' + p.gmaps + '" target="_blank" rel="noopener" style="color:#3F5B5E">' + t.directions + '</a>' +
+        '</div></div>'
+      );
+      bounds.push([p.lat, p.lng]);
+      if (focus && p.slug === focus) setTimeout(function () { m.openPopup(); }, 300);
+    });
+    if (focus) {
+      var f = pins.find(function (p: any) { return p.slug === focus; });
+      map.setView([f.lat, f.lng], 15);
+    } else {
+      map.fitBounds(bounds, { padding: [40, 40] });
+    }
+  })();
+</script>

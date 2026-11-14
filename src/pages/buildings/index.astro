@@ -1,12 +1,14 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { buildings, knownUnits, allUnitsKnown } from '../../data/buildings';
+import BuildingsMap from '../../components/BuildingsMap.astro';
 ---
 <Base title="Our buildings" showBanner={false}>
   <section class="section wrap">
     <p class="eyebrow">Our buildings</p>
     <h1 style="margin-bottom: 12px;">Built in Honolulu, for Honolulu.</h1>
     <p class="lede" style="margin-bottom: 36px;">{buildings.length} new buildings and {allUnitsKnown ? knownUnits : `${knownUnits}+`} apartments, all developed under the City's Bill 7 workforce-housing program and managed by the same team that built them.</p>
+    <div style="margin-bottom: 36px;"><BuildingsMap height="460px" /></div>
     <div class="grid grid-3">
       {buildings.map((b) => (
         <a href={`/buildings/${b.slug}/`} class="card" style="text-decoration: none; color: inherit;">
