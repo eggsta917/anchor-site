@@ -1,12 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
-import { buildings, totalUnits } from '../data/buildings';
+import { buildings } from '../data/buildings';
 ---
 <Base title="About" showBanner={false}>
   <section class="section wrap">
     <p class="eyebrow">About</p>
     <h1 style="margin-bottom: 12px;">Managed by the people who built it.</h1>
-    <p class="lede" style="margin-bottom: 24px;">Anchor Rentals is the leasing and management brand of Oceans Real Estate, a Honolulu brokerage and developer. Since 2022 we have delivered {buildings.length} workforce-housing buildings, {totalUnits} apartments in all, under the City's Bill 7 program, and we manage every one of them ourselves.</p>
+    <p class="lede" style="margin-bottom: 24px;">Anchor Rentals is the leasing and management brand of Oceans Real Estate, a Honolulu brokerage and developer. We have been building workforce housing in urban Honolulu under the City's Bill 7 program since 2022. Anchor opens with {buildings.length} new buildings, and we manage every one of them ourselves.</p>
     <div class="split split-even" style="align-items: start; margin-top: 32px;">
       <div class="step" style="background: var(--white); border: 1px solid var(--line);">
         <h3>What Bill 7 is</h3>

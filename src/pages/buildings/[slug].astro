@@ -16,7 +16,7 @@ const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURICompo
   <section class="section wrap">
     <div class="split split-even" style="align-items: start;">
       <div>
-        <p class="eyebrow">{b.area} · {b.units} apartments</p>
+        <p class="eyebrow">{b.area}{b.units ? ` · ${b.units} apartments` : ''}</p>
         <h1 style="margin-bottom: 12px;">{b.name}</h1>
         <p class="muted" style="margin-bottom: 20px;"><a href={mapUrl} rel="noopener" target="_blank">{b.address}</a></p>
         <p class="lede" style="margin-bottom: 24px;">{b.blurb}</p>

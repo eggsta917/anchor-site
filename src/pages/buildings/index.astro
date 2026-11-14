@@ -1,12 +1,12 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { buildings, totalUnits } from '../../data/buildings';
+import { buildings, knownUnits, allUnitsKnown } from '../../data/buildings';
 ---
 <Base title="Our buildings" showBanner={false}>
   <section class="section wrap">
     <p class="eyebrow">Our buildings</p>
     <h1 style="margin-bottom: 12px;">Built in Honolulu, for Honolulu.</h1>
-    <p class="lede" style="margin-bottom: 36px;">{buildings.length} buildings, {totalUnits} apartments, all developed under the City's Bill 7 workforce-housing program and managed by the same team that built them.</p>
+    <p class="lede" style="margin-bottom: 36px;">{buildings.length} new buildings and {allUnitsKnown ? knownUnits : `${knownUnits}+`} apartments, all developed under the City's Bill 7 workforce-housing program and managed by the same team that built them.</p>
     <div class="grid grid-3">
       {buildings.map((b) => (
         <a href={`/buildings/${b.slug}/`} class="card" style="text-decoration: none; color: inherit;">
@@ -17,7 +17,7 @@ import { buildings, totalUnits } from '../../data/buildings';
           <div class="card-body">
             <h3>{b.name}</h3>
             <p class="muted" style="font-size: 14px;">{b.address}</p>
-            <p style="font-size: 14px; margin-top: 6px;">{b.units} apartments · completed {b.completed}</p>
+            <p style="font-size: 14px; margin-top: 6px;">{b.units ? `${b.units} apartments` : 'New construction'} · {b.completed}</p>
             <p style="font-size: 13px; font-weight: 600; margin-top: auto; padding-top: 12px; color: var(--teal);">{b.statusLabel}</p>
           </div>
         </a>

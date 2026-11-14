@@ -13,7 +13,7 @@ export const t = {
       cta2: 'Check if I qualify',
       proof: 'Built and managed by Oceans Real Estate under Honolulu’s Bill 7 program',
     },
-    stats: { units: 'apartments', buildings: 'buildings', first: 'first building' },
+    stats: { units: 'new apartments', buildings: 'new buildings', first: 'first move-ins' },
     units: { eyebrow: 'Now leasing', h2: 'Available units', live: 'Updated live from our leasing system', apply: 'Apply', mo: '/ mo', available: 'Available', waitlist: 'Join waitlist', none: 'Nothing open at the moment. Join the waitlist below and we’ll text you first.' },
     buildings: { eyebrow: 'Our buildings', h2: 'Built in Honolulu, for Honolulu.', lede: 'Every Anchor building was developed under the City’s Bill 7 workforce-housing program, which trades property-tax relief for a long-term promise: rents stay within reach of local working households.', apartments: 'apartments' },
     how: {
@@ -27,7 +27,7 @@ export const t = {
       ],
     },
     waitlist: { h2: 'Nothing open right now?', lede: 'Join the waitlist and we’ll text you the moment a unit that fits your household comes up.', name: 'Name', phone: 'Mobile phone', cta: 'Join waitlist', consent: 'By joining you agree to receive text messages from Anchor Rentals about unit availability. Message frequency varies. Reply STOP to opt out, HELP for help. Message and data rates may apply.', done: 'You’re on the list. We’ll text you when something opens.' },
-    about: { h2: 'Managed by the people who built it.', body: 'Anchor Rentals is the leasing and management brand of Oceans Real Estate, a Honolulu brokerage and developer that has delivered five workforce-housing buildings under Bill 7 since 2022. We manage what we build, so the person answering your maintenance request knows the building.' },
+    about: { h2: 'Managed by the people who built it.', body: 'Anchor Rentals is the leasing and management brand of Oceans Real Estate, a Honolulu brokerage and developer that has been building workforce housing under Bill 7 since 2022. We manage what we build, so the person answering your maintenance request knows the building.' },
     footer: { legal: '© 2026 Anchor Rentals, a DBA of Oceans Real Estate LLC · RB-22133', eho: 'Equal Housing Opportunity', privacy: 'Privacy', lang: '日本語', langHref: '/ja/' },
   },
   ja: {
@@ -42,9 +42,9 @@ export const t = {
       cta2: '入居条件を確認',
       proof: 'ホノルル市Bill 7プログラムに基づき、オーシャンズ不動産が開発・管理',
     },
-    stats: { units: '戸', buildings: '棟', first: '第1号物件竣工' },
+    stats: { units: '新築戸数', buildings: '新築棟数', first: '入居開始' },
     units: { eyebrow: '入居者募集中', h2: '空室情報', live: '管理システムと連動し自動更新', apply: '申込む', mo: '/ 月', available: '入居可能日', waitlist: 'ウェイトリスト登録', none: '現在空室はありません。下記ウェイトリストにご登録ください。' },
-    buildings: { eyebrow: '物件一覧', h2: 'ホノルルで、ホノルルのために。', lede: 'アンカー・レンタルズの全物件は、ホノルル市のBill 7ワークフォース住宅プログラムのもとで開発されています。固定資産税の軽減と引き換えに、地元の働く世帯が手の届く家賃を長期的に維持します。', apartments: '戸' },
+    buildings: { eyebrow: '物件一覧', h2: 'ホノルルで、ホノルルのために。', lede: 'アンカー・レンタルズの全物件は、ホノルル市のBill 7ワークフォース住宅プログラムのもとで開発されています。固定資産税の軽減と引き換えに、地元の働く世帯が手の届く家賃を長期的に維持します。', apartments: '戸', newBuild: '新築' },
     how: {
       eyebrow: '入居条件', h2: '入居できますか？',
       lede: 'アンカーの住戸の多くは、ホノルルのエリア中央所得（AMI）の80%以下の世帯が対象です。一部の物件では、限られた戸数を所得上限なしで募集しています。',
@@ -58,7 +58,7 @@ export const t = {
       ],
     },
     waitlist: { h2: '今は空室がありませんか？', lede: 'ウェイトリストにご登録いただくと、条件に合う空室が出た時点でSMSでお知らせします。', name: 'お名前', phone: '携帯電話番号', cta: '登録する', consent: '登録により、アンカー・レンタルズから空室に関するSMSを受信することに同意したものとみなします。配信停止はSTOPと返信してください。通信料が発生する場合があります。', done: '登録が完了しました。空室が出次第ご連絡します。' },
-    about: { h2: '建てた人が、管理する。', body: 'アンカー・レンタルズは、2022年以降Bill 7のもとで5棟のワークフォース住宅を手がけたホノルルの不動産会社、オーシャンズ不動産の賃貸・管理ブランドです。自社で建てた建物を自社で管理するため、修繕のご連絡に対応するスタッフが建物を熟知しています。' },
+    about: { h2: '建てた人が、管理する。', body: 'アンカー・レンタルズは、2022年以降Bill 7のもとでワークフォース住宅を手がけてきたホノルルの不動産会社、オーシャンズ不動産の賃貸・管理ブランドです。自社で建てた建物を自社で管理するため、修繕のご連絡に対応するスタッフが建物を熟知しています。' },
     footer: { legal: '© 2026 Anchor Rentals（Oceans Real Estate LLC のDBA）· RB-22133', eho: 'Equal Housing Opportunity', privacy: 'プライバシー', lang: 'English', langHref: '/' },
   },
 } as const;

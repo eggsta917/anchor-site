@@ -1,7 +1,7 @@
 ---
 import UnitCard from './UnitCard.astro';
 import Waitlist from './Waitlist.astro';
-import { buildings, totalUnits } from '../data/buildings';
+import { buildings, knownUnits, allUnitsKnown } from '../data/buildings';
 import { getListings } from '../lib/appfolio';
 import { useT, type Lang } from '../i18n';
 interface Props { lang?: Lang }
@@ -9,7 +9,7 @@ const { lang = 'en' } = Astro.props;
 const s = useT(lang);
 const root = lang === 'ja' ? '/ja' : '';
 const listings = await getListings();
-const firstYear = Math.min(...buildings.map((b) => b.completed));
+
 ---
 <!-- hero -->
 <section class="section wrap" id="top">
@@ -29,11 +29,11 @@ const firstYear = Math.min(...buildings.map((b) => b.completed));
     <div style="background: var(--gold); border-radius: 24px; min-height: 360px; display: flex; align-items: flex-end; padding: 24px; position: relative; overflow: hidden;">
       <img src="/images/hero.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;" onerror="this.remove()" />
       <div style="background: var(--cream); border-radius: 14px; padding: 16px 18px; display: flex; gap: 18px; align-items: center; position: relative;">
-        <div><p class="stat">{totalUnits}</p><p>{s.stats.units}</p></div>
-        <div style="width: 1px; height: 36px; background: var(--line);"></div>
         <div><p class="stat">{buildings.length}</p><p>{s.stats.buildings}</p></div>
         <div style="width: 1px; height: 36px; background: var(--line);"></div>
-        <div><p class="stat">{firstYear}</p><p>{s.stats.first}</p></div>
+        <div><p class="stat">{allUnitsKnown ? knownUnits : `${knownUnits}+`}</p><p>{s.stats.units}</p></div>
+        <div style="width: 1px; height: 36px; background: var(--line);"></div>
+        <div><p class="stat">2027</p><p>{s.stats.first}</p></div>
       </div>
     </div>
   </div>
@@ -65,7 +65,7 @@ const firstYear = Math.min(...buildings.map((b) => b.completed));
       <a href={`${root}/buildings/${b.slug}/`} class="tile">
         <span class="area">{b.area}</span>
         <span class="name">{b.name}</span>
-        <span class="muted" style="font-size: 14px;">{b.units} {s.buildings.apartments}</span>
+        <span class="muted" style="font-size: 14px;">{b.units ? `${b.units} ${s.buildings.apartments}` : s.buildings.newBuild}</span>
         <span class="status">{lang === 'ja' ? b.statusLabelJa : b.statusLabel}</span>
         {b.openIncome && <span style="font-size: 12px; font-weight: 600; color: var(--teal);">{s.how.openTag}</span>}
       </a>
