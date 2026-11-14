@@ -37,12 +37,12 @@ export const buildings: Building[] = [
     blurb:
       'Our largest building: 80 one-bedroom and 10 two-bedroom apartments a short walk from Makiki District Park, with 32 parking stalls.',
     blurbJa: '1ベッド80戸・2ベッド10戸の最大規模の物件。マキキ・ディストリクト・パーク至近、駐車場32台。',
-    mix: '80 × 1 bd (350 sq ft) · 10 × 2 bd (695 sq ft)',
+    mix: '80 × 1 bd (350 sq ft interior) · 10 × 2 bd (695 sq ft interior)',
     parking: '32 stalls',
     openIncome: true,
     plans: [
-      { src: '/images/makiki-banyan-1br.jpg', caption: 'One-bedroom: 20′4″ × 19′0″. Separate bedroom (12′2″ × 9′3″), living/dining (12′2″ × 9′5″), full kitchen with breakfast bar, in-unit washer/dryer closet, through-wall A/C.' },
-      { src: '/images/makiki-banyan-2br.jpg', caption: 'Two-bedroom: 40′0″ × 20′4″. Two bedrooms (12′0″ × 9′7″ and 12′0″ × 9′6″), open living/dining, kitchen 8′6″ × 11′4″, washer/dryer closet. Two per floor, corner units.' },
+      { src: '/images/makiki-banyan-1br.jpg', caption: 'One-bedroom, 350 sq ft interior (20′4″ × 19′0″ overall). Separate bedroom (12′2″ × 9′3″), living/dining (12′2″ × 9′5″), full kitchen with breakfast bar, in-unit washer/dryer closet, through-wall A/C.' },
+      { src: '/images/makiki-banyan-2br.jpg', caption: 'Two-bedroom, 695 sq ft interior (40′0″ × 20′4″ overall). Two bedrooms (12′0″ × 9′7″ and 12′0″ × 9′6″), open living/dining, kitchen 8′6″ × 11′4″, washer/dryer closet. Two per floor, corner units.' },
       { src: '/images/makiki-banyan-floorplan.jpg', caption: 'Typical floor, floors 2–6: 16 one-bedroom and 2 two-bedroom apartments around a central corridor.' },
     ],
   },
