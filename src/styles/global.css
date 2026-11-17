@@ -132,3 +132,7 @@ table.limits { width: 100%; border-collapse: collapse; font-size: 15px; backgrou
 table.limits th, table.limits td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--line); }
 table.limits th { background: var(--teal-pale); font-weight: 600; }
 .table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius-lg); }
+
+.logo svg { display: block; }
+.logo-narrow { display: none !important; }
+@media (max-width: 560px) { .logo-wide { display: none !important; } .logo-narrow { display: inline-flex !important; } }

@@ -20,6 +20,8 @@ const apply = import.meta.env.PUBLIC_APPLY_URL ?? '#';
   <meta name="description" content={description} />
   {import.meta.env.PUBLIC_SITE_LIVE !== 'true' && <meta name="robots" content="noindex, nofollow" />}
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon.ico" sizes="32x32" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="alternate" hreflang="en" href="https://anchorrentalshawaii.com/" />
   <link rel="alternate" hreflang="ja" href="https://anchorrentalshawaii.com/ja/" />
   <meta property="og:title" content={`${title} · Anchor Rentals`} />
@@ -33,9 +35,9 @@ const apply = import.meta.env.PUBLIC_APPLY_URL ?? '#';
     </div>
   )}
   <header class="wrap" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding-block: 18px;">
-    <a href={`${root}/`} style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--teal-dark);">
-      <Logo />
-      <span style="font-family: var(--font-head); font-weight: 700; font-size: 22px; letter-spacing: -0.02em;">Anchor Rentals</span>
+    <a href={`${root}/`} style="display: inline-flex; align-items: center; text-decoration: none; color: var(--teal-dark);">
+      <Logo variant="horizontal" height={46} class="logo-wide" />
+      <Logo variant="mark" height={40} class="logo-narrow" />
     </a>
     <nav style="display: flex; flex-wrap: wrap; gap: 20px; font-size: 15px; font-weight: 500;">
       <a href={`${root}/units/`} style="text-decoration: none;">{s.nav.units}</a>
@@ -55,6 +57,7 @@ const apply = import.meta.env.PUBLIC_APPLY_URL ?? '#';
   <footer id="about" class="band-dark" style="padding: 48px 0 28px;">
     <div class="wrap split split-even" style="align-items: start;">
       <div>
+        <div style="color: var(--cream); margin-bottom: 18px;"><Logo variant="horizontal" height={40} /></div>
         <p style="font-family: var(--font-head); font-weight: 700; font-size: 26px; letter-spacing: -0.02em; margin-bottom: 10px;">{s.about.h2}</p>
         <p class="muted" style="font-size: 15px; line-height: 1.6; max-width: 520px;">{s.about.body}</p>
       </div>
