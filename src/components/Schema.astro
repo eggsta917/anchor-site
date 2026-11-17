@@ -1,0 +1,37 @@
+---
+import { buildings } from '../data/buildings';
+const site = 'https://anchorrentalshawaii.com';
+const org = {
+  '@context': 'https://schema.org',
+  '@type': ['Organization', 'RealEstateAgent'],
+  '@id': `${site}/#org`,
+  name: 'Anchor Rentals',
+  alternateName: 'Anchor Rentals Hawaii',
+  legalName: 'Oceans Real Estate LLC',
+  url: site,
+  logo: `${site}/brand/anchor-rentals-stacked-teal.svg`,
+  image: `${site}/images/hero.jpg`,
+  email: 'leasing@anchorrentalshawaii.com',
+  address: { '@type': 'PostalAddress', streetAddress: '7192 Kalanianaʻole Hwy, Suite A143A', addressLocality: 'Honolulu', addressRegion: 'HI', postalCode: '96825', addressCountry: 'US' },
+  areaServed: { '@type': 'City', name: 'Honolulu' },
+  parentOrganization: { '@type': 'Organization', name: 'Oceans Real Estate', url: 'https://oceanshawaii.com' },
+  description: 'Workforce rental apartments in urban Honolulu, built and managed by Oceans Real Estate under the City’s Bill 7 program.',
+};
+const complexes = buildings.map((b) => ({
+  '@context': 'https://schema.org',
+  '@type': 'ApartmentComplex',
+  '@id': `${site}/buildings/${b.slug}/#place`,
+  name: b.name,
+  url: `${site}/buildings/${b.slug}/`,
+  image: `${site}/images/${b.slug}.jpg`,
+  address: { '@type': 'PostalAddress', streetAddress: b.address.split(',')[0], addressLocality: 'Honolulu', addressRegion: 'HI', postalCode: b.address.match(/\d{5}$/)?.[0], addressCountry: 'US' },
+  geo: { '@type': 'GeoCoordinates', latitude: b.lat, longitude: b.lng },
+  numberOfAccommodationUnits: b.units ?? undefined,
+  petsAllowed: undefined,
+  description: b.blurb,
+  containedInPlace: { '@type': 'Neighborhood', name: b.area },
+  provider: { '@id': `${site}/#org` },
+}));
+---
+<script type="application/ld+json" set:html={JSON.stringify(org)} />
+{complexes.map((c) => <script type="application/ld+json" set:html={JSON.stringify(c)} />)}

@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Logo from '../components/Logo.astro';
 import Lightbox from '../components/Lightbox.astro';
+import Schema from '../components/Schema.astro';
 import { useT, type Lang } from '../i18n';
 
 interface Props { title: string; description?: string; lang?: Lang; showBanner?: boolean }
@@ -27,6 +28,11 @@ const apply = import.meta.env.PUBLIC_APPLY_URL ?? '#';
   <meta property="og:title" content={`${title} · Anchor Rentals`} />
   <meta property="og:description" content={description} />
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Anchor Rentals" />
+  <meta property="og:image" content="https://anchorrentalshawaii.com/images/hero.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href={`https://anchorrentalshawaii.com${Astro.url.pathname}`} />
+  <Schema />
 </head>
 <body>
   {showBanner && (
@@ -38,6 +44,7 @@ const apply = import.meta.env.PUBLIC_APPLY_URL ?? '#';
     <a href={`${root}/`} style="display: inline-flex; align-items: center; text-decoration: none; color: var(--teal-dark);">
       <Logo variant="horizontal" height={46} class="logo-wide" />
       <Logo variant="mark" height={40} class="logo-narrow" />
+      <span class="sr-only">Anchor Rentals</span>
     </a>
     <nav style="display: flex; flex-wrap: wrap; gap: 20px; font-size: 15px; font-weight: 500;">
       <a href={`${root}/units/`} style="text-decoration: none;">{s.nav.units}</a>
