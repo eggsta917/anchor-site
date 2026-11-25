@@ -122,11 +122,15 @@ function buildingFor(address1: string) {
   });
 }
 
-let listingsOnce: Promise<Listing[]> | null = null;
+let listingsCache: { at: number; value: Promise<Listing[]> } | null = null;
+const LISTINGS_TTL_MS = 5 * 60 * 1000;
 
-/** One AppFolio call per build/process, shared by every page. */
+/** One AppFolio call per five minutes per server instance (and one per build). */
 export function getListings(): Promise<Listing[]> {
-  return (listingsOnce ??= fetchListings());
+  if (!listingsCache || Date.now() - listingsCache.at > LISTINGS_TTL_MS) {
+    listingsCache = { at: Date.now(), value: fetchListings() };
+  }
+  return listingsCache.value;
 }
 
 async function fetchListings(): Promise<Listing[]> {
@@ -232,7 +236,7 @@ function normalizeListing(r: any): Listing {
     id: String(r.Id),
     propertyName: b?.name ?? r.PropertyMarketingTitle ?? '',
     address: r.Address1 ?? '',
-    unit: r.Address2 ?? r.UnitType ?? '',
+    unit: String(r.Address2 ?? r.UnitType ?? '').replace(/^(unit|apt|#)\s*#?/i, '').trim(),
     bedrooms: Number(r.Bedrooms ?? 0),
     bathrooms: Number(r.Bathrooms ?? 0),
     squareFeet: r.SquareFeet ? Number(r.SquareFeet) : null,

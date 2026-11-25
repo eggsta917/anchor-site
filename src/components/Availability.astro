@@ -1,0 +1,68 @@
+---
+// Availability list for one building: one row per home, each with its own Apply link.
+import type { Listing } from '../lib/appfolio';
+import type { Building } from '../data/buildings';
+interface Props { b: Building; listings: Listing[] }
+const { b, listings } = Astro.props;
+
+const num = (u: Listing) => parseInt(u.unit, 10);
+const rows = [...listings].sort((x, y) => (num(x) || 0) - (num(y) || 0) || x.rent - y.rent);
+const money = (n: number) => (n > 0 ? `$${n.toLocaleString('en-US')}` : 'Ask');
+const date = (d: string) => {
+  if (!d) return 'Ask';
+  const t = new Date(d + 'T12:00:00');
+  return t.getTime() <= Date.now() ? 'Now' : t.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+};
+const floor = (u: Listing) => (num(u) >= 100 ? String(Math.floor(num(u) / 100)) : '');
+const side = (u: Listing) => {
+  if (!b.courtyardStacks || !(num(u) >= 100)) return '';
+  return b.courtyardStacks.includes(num(u) % 100) ? 'Courtyard side' : 'Outer side';
+};
+const hasSide = rows.some((u) => side(u));
+const rents = rows.map((u) => u.rent).filter((r) => r > 0);
+const range = rents.length ? (Math.min(...rents) === Math.max(...rents) ? money(rents[0]) : `${money(Math.min(...rents))}–${money(Math.max(...rents))}`) : '';
+---
+<p class="lede" style="margin-bottom: 24px; color: inherit;">
+  {rows.length} {rows.length === 1 ? 'home' : 'homes'} available{range && <> · {range} a month</>}.
+  Pick a home and apply online in about 15 minutes.
+</p>
+<div class="avail" role="table" aria-label={`Available homes at ${b.name}`}>
+  <div class="avail-row avail-head" role="row">
+    <span role="columnheader">Home</span>
+    <span role="columnheader">Floor</span>
+    {hasSide && <span role="columnheader">Side</span>}
+    <span role="columnheader">Size</span>
+    <span role="columnheader">Rent</span>
+    <span role="columnheader">Available</span>
+    <span role="columnheader"><span class="sr-only">Apply</span></span>
+  </div>
+  {rows.map((u) => (
+    <div class="avail-row" role="row">
+      <span role="cell" data-label="Home" class="avail-home">{u.unit || '—'}</span>
+      <span role="cell" data-label="Floor">{floor(u) || '—'}</span>
+      {hasSide && <span role="cell" data-label="Side">{side(u) || '—'}</span>}
+      <span role="cell" data-label="Size">{u.bedrooms} bd · {u.bathrooms} ba{u.squareFeet ? ` · ${u.squareFeet} sq ft` : ''}</span>
+      <span role="cell" data-label="Rent" class="avail-rent">{money(u.rent)}<small> / mo</small></span>
+      <span role="cell" data-label="Available">{date(u.availableOn)}</span>
+      <span role="cell" class="avail-cta"><a href={u.applicationUrl} class="btn btn-primary btn-sm" rel="noopener" aria-label={`Apply for home ${u.unit}`}>Apply</a></span>
+    </div>
+  ))}
+</div>
+
+<style define:vars={{ cols: hasSide ? '0.7fr 0.6fr 1.2fr 1.8fr 1fr 1.1fr 84px' : '0.7fr 0.6fr 1.8fr 1fr 1.1fr 84px' }}>
+  .avail { background: var(--white); color: var(--teal-dark); border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--line); }
+  .avail-row { display: grid; grid-template-columns: var(--cols); gap: 12px; align-items: center; padding: 12px 20px; border-top: 1px solid var(--line); font-size: 15px; }
+  .avail-row:first-child { border-top: 0; }
+  .avail-head { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal-ink); background: var(--cream); padding-block: 10px; }
+  .avail-home { font-family: var(--font-head); font-weight: 700; font-size: 17px; }
+  .avail-rent { font-weight: 700; }
+  .avail-rent small { font-weight: 400; color: var(--teal-ink); }
+  .avail-cta { text-align: right; }
+  @media (max-width: 760px) {
+    .avail-head { display: none; }
+    .avail-row { grid-template-columns: 1fr 1fr; gap: 6px 16px; padding: 16px; }
+    .avail-row [data-label]::before { content: attr(data-label) ': '; color: var(--teal-ink); font-size: 13px; font-weight: 400; font-family: var(--font-body, inherit); }
+    .avail-cta { grid-column: 1 / -1; text-align: left; margin-top: 6px; }
+    .avail-cta .btn { width: 100%; }
+  }
+</style>

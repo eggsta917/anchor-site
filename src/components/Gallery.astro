@@ -1,0 +1,41 @@
+---
+// Photo mosaic for a building. Every photo opens in the page's lightbox.
+interface Props { slug: string; name: string; photos: { file: string; alt: string }[] }
+const { slug, name, photos } = Astro.props;
+const full = (f: string) => `/images/${slug}/${f}`;
+const thumb = (f: string) => `/images/${slug}/thumb-${f}`;
+const SHOWN = 5;
+---
+<div class="gallery">
+  {photos.map((ph, i) => (
+    <a
+      href={full(ph.file)}
+      data-lightbox
+      data-gallery={slug}
+      data-caption={`${name} · ${ph.alt}`}
+      aria-label={`${ph.alt}, photo ${i + 1} of ${photos.length}`}
+      class:list={['gallery-item', i === 0 && 'gallery-lead', i >= SHOWN && 'gallery-more']}
+    >
+      <img src={i === 0 ? full(ph.file) : thumb(ph.file)} alt={ph.alt} loading={i === 0 ? 'eager' : 'lazy'} />
+      {i === SHOWN - 1 && photos.length > SHOWN && <span class="gallery-count">+{photos.length - SHOWN} photos</span>}
+    </a>
+  ))}
+</div>
+
+<style>
+  .gallery { display: grid; gap: 8px; grid-template-columns: repeat(2, 1fr); border-radius: 24px; overflow: hidden; }
+  .gallery-item { position: relative; display: block; aspect-ratio: 4 / 3; background: var(--teal-pale); }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .gallery-item:focus-visible { outline: 3px solid var(--gold); outline-offset: -3px; }
+  .gallery-lead { grid-column: 1 / -1; }
+  .gallery-more { display: none; }
+  .gallery-count {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    background: rgba(16, 42, 46, 0.62); color: var(--cream); font-weight: 600; font-size: 17px;
+  }
+  @media (min-width: 900px) {
+    .gallery { grid-template-columns: 2fr 1fr 1fr; grid-template-rows: repeat(2, 1fr); }
+    .gallery-item { aspect-ratio: auto; min-height: 210px; }
+    .gallery-lead { grid-column: 1; grid-row: 1 / span 2; }
+  }
+</style>

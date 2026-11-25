@@ -54,7 +54,7 @@ const apply = import.meta.env.PUBLIC_APPLY_URL ?? '#';
     </nav>
     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
       <a href={resident} class="btn btn-outline btn-sm" rel="noopener">{s.nav.resident}</a>
-      <a href={apply} class="btn btn-primary btn-sm" rel="noopener">{s.nav.apply}</a>
+      <a href={`${root}/units/`} class="btn btn-primary btn-sm">{s.nav.apply}</a>
     </div>
   </header>
 

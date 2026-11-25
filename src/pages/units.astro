@@ -1,18 +1,47 @@
 ---
 import Base from '../layouts/Base.astro';
-import UnitCard from '../components/UnitCard.astro';
 import Waitlist from '../components/Waitlist.astro';
 import { getListings } from '../lib/appfolio';
-import { buildings, planFor } from '../data/buildings';
+import { buildings } from '../data/buildings';
+
+// Rendered on request so availability and rents come straight from AppFolio.
+export const prerender = false;
+Astro.response.headers.set('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=900');
+
 const listings = await getListings();
+const money = (n: number) => `$${n.toLocaleString('en-US')}`;
+const groups = buildings
+  .map((b) => {
+    const mine = listings.filter((u) => u.propertyName === b.name);
+    const rents = mine.map((u) => u.rent).filter((r) => r > 0);
+    const beds = [...new Set(mine.map((u) => u.bedrooms))].sort();
+    return { b, count: mine.length, from: rents.length ? Math.min(...rents) : 0, beds };
+  })
+  .filter((g) => g.count > 0);
 ---
 <Base title="Available units" showBanner={false}>
   <section class="section wrap">
     <p class="eyebrow">Now leasing</p>
     <h1 style="margin-bottom: 12px;">Available units</h1>
-    <p class="lede" style="margin-bottom: 32px;">Most units are income-qualified: your household must earn at or below 80% of Honolulu's area median income. Units marked <strong>Open to all incomes</strong> have no income cap. <a href="/eligibility/">Check the limits</a> before you apply.</p>
-    {listings.length ? (
-      <div class="grid grid-3">{listings.map((u) => <UnitCard u={u} openIncome={buildings.find((b) => b.name === u.propertyName)?.openIncome} planSrc={planFor(u.propertyName, u.bedrooms)} />)}</div>
+    <p class="lede" style="margin-bottom: 32px;">Most homes are income-qualified: your household earns at or below 80% of Honolulu's area median income. At some buildings a limited number of homes have no income limit, so everyone is welcome to apply. <a href="/eligibility/">Check the limits</a>.</p>
+    {groups.length ? (
+      <div class="grid grid-3">
+        {groups.map(({ b, count, from, beds }) => (
+          <article class="card">
+            <a href={`/buildings/${b.slug}/#available`} class="card-media" style="display: block;" aria-label={`${b.name}: see available homes`}>
+              <img src={b.gallery?.length ? `/images/${b.slug}/thumb-${b.gallery[0].file}` : `/images/${b.slug}.jpg`} alt={`${b.name}`} loading="lazy" />
+              <span class="chip">{count} {count === 1 ? 'home' : 'homes'} available</span>
+            </a>
+            <div class="card-body">
+              <h3>{b.name}</h3>
+              <p class="muted" style="font-size: 14px;">{b.address.split(',')[0]} · {b.area} · {beds.map((n) => `${n} bd`).join(', ')}</p>
+              {from > 0 && <p class="price"><small>from </small>{money(from)}<small> / mo</small></p>}
+              <p style="font-size: 12px; font-weight: 600; margin-bottom: 14px; color: var(--teal);">{b.openIncome ? 'Income-qualified · a limited number open to all incomes' : 'Income-qualified'}</p>
+              <a href={`/buildings/${b.slug}/#available`} class="btn btn-primary" style="margin-top: auto;">See homes and apply</a>
+            </div>
+          </article>
+        ))}
+      </div>
     ) : (
       <p class="lede">Nothing is open at the moment. Join the waitlist below and we'll text you first.</p>
     )}
