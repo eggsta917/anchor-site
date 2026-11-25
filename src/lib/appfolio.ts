@@ -160,8 +160,17 @@ async function resolvePropertyId(slugOrId?: string): Promise<string | undefined>
     }
     try {
       const props = await getAll('/properties?filters[LastUpdatedAtFrom]=2000-01-01T00:00:00Z');
+      const norm = (v: string) => (v ?? '').toLowerCase().replace(/\s+/g, ' ').trim();
+      // 1) exact name match (e.g. "Piikoi Flats"), so an older record at the same
+      //    street address (the former "1525 Piikoi St" building) is never picked.
+      for (const b of buildings) {
+        const hit = props.find((p) => norm(p.Name) === norm(b.name));
+        if (hit && !propertyIdCache[b.slug]) propertyIdCache[b.slug] = hit.Id;
+      }
+      // 2) otherwise by address, but only properties still under management.
       for (const p of props) {
-        const b = buildingFor(p.Address1 ?? p.Name ?? '');
+        if (p.ManagementEndDate) continue;
+        const b = buildingFor(p.Address1 ?? '');
         if (b && !propertyIdCache[b.slug]) propertyIdCache[b.slug] = p.Id;
       }
     } catch (err) {
